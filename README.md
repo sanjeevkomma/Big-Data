@@ -10,6 +10,9 @@
 
 # To Read
 
+# Terminology
+* MPP = Massively Parallel Processing
+
 # Framework / Library / Tool
 | #Framework / Library / Tool | #Usage | 
 | :---: | :---: | 
