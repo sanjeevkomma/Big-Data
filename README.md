@@ -15,7 +15,7 @@
 
 # Framework / Library / Tool
 | #Framework / Library / Tool | #Usage | 
-| :---: | :---: | 
+| :--- | :--- | 
 | Apache Hadoop -- Java   | It provides a software framework for distributed storage and processing of big data using the MapReduce |
 | Apache Spark -- Scala, Java, SQL, Python, R, C#, F#  | It provides development APIs in Java, Scala, Python and R for batch processing, interactive queries, real-time analytics, machine learning & graph processing |
 | MapReduce   | Big Data search engine |
