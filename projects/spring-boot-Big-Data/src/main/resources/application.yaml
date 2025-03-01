@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: bigdata-app
+
+hadoop:
+  fs:
+    defaultFS: hdfs://localhost:9000
+  mapreduce:
+    framework:
+      name: yarn
+  yarn:
+    resourcemanager:
+      address: localhost:8032

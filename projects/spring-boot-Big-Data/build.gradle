@@ -1,0 +1,47 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.4.3'
+	id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'spring-boot-Big-Data'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(21)
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	// Spring Boot Web for exposing APIs
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	// Spring Boot for Hadoop
+	implementation 'org.springframework.data:spring-data-hadoop:2.5.0.RELEASE'
+
+	// Apache Hadoop (HDFS, MapReduce)
+	implementation 'org.apache.hadoop:hadoop-common:3.3.6'
+	implementation 'org.apache.hadoop:hadoop-mapreduce-client-core:3.3.6'
+	implementation 'org.apache.hadoop:hadoop-hdfs:3.3.6'
+
+	// Apache Spark
+	implementation 'org.apache.spark:spark-core_2.12:3.5.1'
+	implementation 'org.apache.spark:spark-sql_2.12:3.5.1'
+
+	// Logging (SLF4J)
+	implementation 'org.slf4j:slf4j-api:2.0.9'
+	implementation 'org.slf4j:slf4j-simple:2.0.9'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
