@@ -19,20 +19,14 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-
 	// Spring Boot Web for exposing APIs
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-
 	// Spring Boot for Hadoop
-	// implementation 'org.springframework.data:spring-data-hadoop:2.5.0.RELEASE'
-
+	implementation 'org.springframework.data:spring-data-hadoop:2.5.0.RELEASE'
 	// Apache Hadoop (HDFS, MapReduce)
 	implementation 'org.apache.hadoop:hadoop-common:3.3.6'
 	implementation 'org.apache.hadoop:hadoop-mapreduce-client-core:3.3.6'
 	implementation 'org.apache.hadoop:hadoop-hdfs:3.3.6'
-
 	// Apache Spark
 	implementation 'org.apache.spark:spark-core_2.12:3.5.1'
 	implementation 'org.apache.spark:spark-sql_2.12:3.5.1'
@@ -40,6 +34,9 @@ dependencies {
 	implementation 'org.slf4j:slf4j-api:2.0.9'
 	implementation 'ch.qos.logback:logback-classic:1.4.14'
 	implementation 'ch.qos.logback:logback-core:1.4.14'
+
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
 	configurations.all {
 		exclude group: 'org.apache.logging.log4j', module: 'log4j-to-slf4j'
