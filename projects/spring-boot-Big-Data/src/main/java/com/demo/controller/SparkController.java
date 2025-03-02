@@ -1,4 +1,4 @@
-package com.demo.bigdata.controller;
+package com.demo.controller;
 
 import com.demo.bigdata.spark.SparkWordCount;
 import org.springframework.web.bind.annotation.*;
@@ -20,4 +20,3 @@ public class SparkController {
         }
     }
 }
-

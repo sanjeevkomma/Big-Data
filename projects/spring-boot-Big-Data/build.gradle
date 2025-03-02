@@ -26,7 +26,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 
 	// Spring Boot for Hadoop
-	implementation 'org.springframework.data:spring-data-hadoop:2.5.0.RELEASE'
+	// implementation 'org.springframework.data:spring-data-hadoop:2.5.0.RELEASE'
 
 	// Apache Hadoop (HDFS, MapReduce)
 	implementation 'org.apache.hadoop:hadoop-common:3.3.6'
@@ -37,9 +37,20 @@ dependencies {
 	implementation 'org.apache.spark:spark-core_2.12:3.5.1'
 	implementation 'org.apache.spark:spark-sql_2.12:3.5.1'
 
-	// Logging (SLF4J)
 	implementation 'org.slf4j:slf4j-api:2.0.9'
-	implementation 'org.slf4j:slf4j-simple:2.0.9'
+	implementation 'ch.qos.logback:logback-classic:1.4.14'
+	implementation 'ch.qos.logback:logback-core:1.4.14'
+
+	configurations.all {
+		exclude group: 'org.apache.logging.log4j', module: 'log4j-to-slf4j'
+		exclude group: 'org.apache.logging.log4j', module: 'log4j-slf4j2-impl'
+		exclude group: 'org.apache.logging.log4j', module: 'log4j-core'
+		exclude group: 'org.slf4j', module: 'slf4j-reload4j'
+		exclude group: 'org.slf4j', module: 'slf4j-simple'
+		exclude group: 'ch.qos.logback', module: 'logback-classic'
+		exclude group: 'ch.qos.logback', module: 'logback-core'
+	}
+
 }
 
 tasks.named('test') {
