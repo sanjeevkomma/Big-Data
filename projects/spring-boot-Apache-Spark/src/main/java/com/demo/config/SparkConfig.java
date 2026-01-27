@@ -14,10 +14,17 @@ public class SparkConfig {
         return SparkSession.builder()
                 .appName("SpringBootSparkPOC")
                 .master("local[*]")
+
+                // 🔥 Kill ALL servlet-based Spark components
                 .config("spark.ui.enabled", "false")
+                .config("spark.metrics.conf.*.sink.servlet.class", "")
+
+                // Performance + Windows safety
                 .config("spark.serializer", "org.apache.spark.serializer.KryoSerializer")
                 .config("spark.hadoop.fs.file.impl", "org.apache.hadoop.fs.LocalFileSystem")
+
                 .getOrCreate();
     }
 }
+
 
