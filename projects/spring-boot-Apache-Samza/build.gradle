@@ -16,14 +16,30 @@ java {
 
 repositories {
 	mavenCentral()
+	maven { url 'https://repository.apache.org/content/groups/public/' }
 }
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	// Samza valid artifacts
+	implementation 'org.apache.samza:samza-api:1.7.0'
+	implementation 'org.apache.samza:samza-core_2.11:1.7.0'
+	implementation 'org.apache.samza:samza-kafka_2.11:1.7.0'
+
+	// OpenAPI (optional)
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
+
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+tasks.withType(JavaCompile) {
+	options.encoding = 'UTF-8'
 }
