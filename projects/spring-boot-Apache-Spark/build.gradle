@@ -22,8 +22,25 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	// Apache Spark
+	implementation 'org.apache.spark:spark-core_2.12:3.5.0'
+	implementation 'org.apache.spark:spark-sql_2.12:3.5.0'
+
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+tasks.withType(JavaExec).configureEach {
+	jvmArgs(
+			"--add-opens=java.base/sun.nio.ch=ALL-UNNAMED",
+			"--add-opens=java.base/java.nio=ALL-UNNAMED",
+			"--add-opens=java.base/java.lang=ALL-UNNAMED"
+	)
+}
+
