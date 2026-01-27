@@ -22,6 +22,21 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	// Hadoop dependencies
+	implementation('org.apache.hadoop:hadoop-common:3.3.6') {
+		exclude group: 'org.slf4j', module: 'slf4j-reload4j'
+		exclude group: 'log4j'
+	}
+	implementation('org.apache.hadoop:hadoop-hdfs:3.3.6') {
+		exclude group: 'org.slf4j', module: 'slf4j-reload4j'
+		exclude group: 'log4j'
+	}
+
+
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
 }
 
 tasks.named('test') {
