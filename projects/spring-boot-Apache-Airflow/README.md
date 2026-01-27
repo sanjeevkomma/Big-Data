@@ -5,44 +5,58 @@
 
 # Flow
 ```arduino
-┌─────────────────────┐
-│   Spring Boot App   │
-│   (REST Controller)│
-└─────────┬───────────┘
-          │ POST /airflow/trigger?runId=xyz
-          ▼
-┌─────────────────────┐
-│   Airflow REST API  │
-│   /api/v1/dags/{dag_id}/dagRuns │
-└─────────┬───────────┘
-          │ Receives DAG ID = sample_dag
-          ▼
-┌─────────────────────┐
-│ Airflow Scheduler   │
-│ Picks up new DAG run│
-└─────────┬───────────┘
-          │ Executes DAG tasks
-          ▼
-┌─────────────────────┐
-│ sample_dag.py DAG   │
-│ PythonOperator tasks│
-│   - process_data()  │
-│   - other tasks     │
-└─────────┬───────────┘
-          │ Task outputs / logs
-          ▼
-┌─────────────────────┐
-│ Airflow UI / Logs   │
-│ Check DAG run status│
-└─────────────────────┘
+       +--------------------+
+       |  User / Client     |
+       +---------+----------+
+                 |
+                 | 1) Calls Spring Boot REST API (/trigger-dag)
+                 v
+       +--------------------+
+       | Spring Boot App    |
+       |  (REST Controller) |
+       +---------+----------+
+                 |
+                 | 2) Prepares request with parameters (optional)
+                 |
+                 | 3) Calls Airflow REST API
+                 |    POST /api/v1/dags/sample_dag/dagRuns
+                 v
+       +--------------------+
+       | Apache Airflow     |
+       |  (REST API +       |
+       |   Scheduler)       |
+       +---------+----------+
+                 |
+                 | 4) Scheduler picks DAG: sample_dag.py
+                 |
+                 | 5) Executes DAG Tasks sequentially/parallel
+                 v
+       +--------------------+
+       | DAG Tasks           |
+       | (PythonOperator,    |
+       |  BashOperator, etc.)|
+       +---------+----------+
+                 |
+                 | 6) DAG execution completes
+                 v
+       +--------------------+
+       | DAG Run Response    |
+       | (Success / Fail,    |
+       |  Run ID, Logs)      |
+       +---------+----------+
+                 |
+                 | 7) Spring Boot receives response
+                 v
+       +--------------------+
+       | REST API Response   |
+       | Returned to User    |
+       +--------------------+
 ```
 # Flow explanation:
-1. Spring Boot exposes a REST endpoint (/airflow/trigger) that your frontend or API client can call.
-2. The REST controller sends an HTTP POST to Airflow’s REST API:
-```bash
-POST http://localhost:8080/api/v1/dags/sample_dag/dagRuns
-{ "dag_run_id": "test_run_1" }
-```
-3. Airflow receives the request and creates a new DAG run for sample_dag.
-4. The Airflow Scheduler executes the DAG tasks in order (PythonOperator, BashOperator, etc.).
-5. Task logs and results can be viewed in the Airflow UI, and the DAG run status is returned via the REST API to Spring Boot.
+1.User Call: Client (Postman, browser, frontend) hits Spring Boot endpoint /trigger-dag.
+2. Prepare Request: Spring Boot reads input, prepares JSON payload for Airflow.
+3. Trigger Airflow: Spring Boot sends POST request to Airflow REST API.
+4. DAG Identification: Airflow Scheduler identifies sample_dag.py from DAG folder.
+5. Execute Tasks: Airflow executes all tasks inside DAG (can be Python, Bash, or MapReduce logic).
+6. Return DAG Run Info: Airflow returns run ID, status, logs.
+7. Response to User: Spring Boot sends success/failure info back to client.
