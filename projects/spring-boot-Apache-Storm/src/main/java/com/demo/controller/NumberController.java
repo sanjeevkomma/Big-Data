@@ -15,15 +15,16 @@ public class NumberController {
 
     public NumberController() {
         spout = new NumberSpout();
-
-        // Start Storm in a separate thread; prevents test failures
-        new Thread(() -> {
-            try {
-                StormTopologyRunner.run();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }).start();
+        // Only start Storm if not running on Windows (optional)
+        if (!System.getProperty("os.name").toLowerCase().contains("win")) {
+            new Thread(() -> {
+                try {
+                    StormTopologyRunner.run();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }).start();
+        }
     }
 
     @PostMapping("/submit")
