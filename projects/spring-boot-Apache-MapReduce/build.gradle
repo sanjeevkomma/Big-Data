@@ -18,10 +18,20 @@ repositories {
 	mavenCentral()
 }
 
+configurations.all {
+	exclude group: 'org.slf4j', module: 'slf4j-reload4j'
+}
+
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	implementation 'org.springframework.boot:spring-boot-starter-web'  // REST API
+	implementation 'org.apache.hadoop:hadoop-common:3.3.4'
+	implementation 'org.apache.hadoop:hadoop-mapreduce-client-core:3.3.4'
+
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
 }
 
 tasks.named('test') {
