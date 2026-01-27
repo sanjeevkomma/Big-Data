@@ -16,12 +16,23 @@ java {
 
 repositories {
 	mavenCentral()
+	maven { url 'https://repo.clojars.org/' }
 }
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	// Apache Storm
+	implementation 'org.apache.storm:storm-core:2.5.0'
+
+	// For JSON handling
+	implementation 'com.fasterxml.jackson.core:jackson-databind'
+
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
 }
 
 tasks.named('test') {
