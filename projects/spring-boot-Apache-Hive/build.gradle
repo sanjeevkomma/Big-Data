@@ -19,11 +19,47 @@ repositories {
 }
 
 dependencies {
+	// Spring Boot Core
 	implementation 'org.springframework.boot:spring-boot-starter'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+
+	// Hive JDBC (exclude old JAXB/Jetty/Tomcat to avoid conflicts)
+	implementation('org.apache.hive:hive-jdbc:3.1.3') {
+		exclude group: 'jakarta.xml.bind', module: 'jakarta.xml.bind-api'
+		exclude group: 'org.glassfish.jaxb', module: 'jaxb-runtime'
+		exclude group: 'org.glassfish.jaxb', module: 'jaxb-core'
+		exclude group: 'org.eclipse.jetty'
+		exclude group: 'org.apache.tomcat'
+		exclude group: 'javax.servlet'
+	}
+
+	// Add one clean JAXB version
+	implementation 'jakarta.xml.bind:jakarta.xml.bind-api:4.0.0'
+	implementation 'org.glassfish.jaxb:jaxb-runtime:4.0.5'
+
+	// SLF4J (keep only one)
+	implementation 'org.slf4j:slf4j-api:2.0.9'
+
+	// Optional: OpenAPI docs
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
+
+	// Test dependencies
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+// BootJar duplicates strategy
+tasks.named('bootJar') {
+	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+// Optional: force Tomcat 10 (Spring Boot default)
+dependencies {
+	implementation 'org.apache.tomcat.embed:tomcat-embed-core:10.1.50'
+	implementation 'org.apache.tomcat.embed:tomcat-embed-websocket:10.1.50'
 }
