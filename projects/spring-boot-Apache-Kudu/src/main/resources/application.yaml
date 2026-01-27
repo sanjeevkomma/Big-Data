@@ -1,3 +1,6 @@
 spring:
   application:
     name: spring-boot-Apache-Kudu
+
+kudu:
+  master: localhost:7051
